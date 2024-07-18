@@ -1,0 +1,58 @@
+#eventoForm {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+}
+
+#eventoForm h1 {
+    font-size: 24px;
+    color: #343a40;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#eventoForm .form-label {
+    color: #495057;
+}
+
+#eventoForm .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+#eventoForm .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+#eventoForm .btn {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#eventoForm #new_event_submit {
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    color: #fff;
+}
+
+#eventoForm #new_event_cancel {
+    background-color: #dc3545;
+    border: 1px solid #dc3545;
+    color: #fff;
+    margin-right: 10px;
+}
+
+#eventoForm #new_event_submit:hover,
+#eventoForm #new_event_cancel:hover {
+    opacity: 0.8;
+}

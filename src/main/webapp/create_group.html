@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<title>LETTA - Create Group</title>
+	
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+</head>
+<body class="text-center">
+	<form id="form-singin">
+		<h1 class="h1 mb-3 font-weight-normal">Create new group</h1>
+
+		<label for="group_name" class="sr-only">Nombre</label>
+		<input id="group_name" name="groupname" type="text" class="form-control" placeholder="Nombre del grupo"
+			   pattern="[A-Za-z0-9 ]{5,20}"
+			   title="Group name must contain between 5 and 20 characters"
+			required autofocus />
+
+		<label for="description" class="sr-only">Descripción</label>
+		<input id="description" name="description" type="text" class="form-control" placeholder="Descripción del grupo" required autofocus pattern="[A-Za-z0-9 ]{5,20}" title="Group description must contain between 5 and 20 characters"/>
+
+		<label for="topic-multiselect" class="form-select form-select-sm">Temáticas</label>
+		<select class="form-select" id="topic-multiselect" name="select-list" multiple>
+			<option value="" disabled selected>Seleccione temáticas</option>
+		</select>
+
+		<button type="submit" class="btn btn-lg btn-primary btn-block mt-3">Registrar</button>
+	</form>
+
+	<script type="text/javascript"
+		src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+	<script type="text/javascript" src="js/dao/groups.js"></script>
+	<script type="text/javascript" src="js/dao/topics.js"></script>
+	<script type="text/javascript">
+		var groupDAO = new GroupsDAO()
+		var topicsDAO = new TopicsDAO();
+	$(document).ready(function() {
+		topicsDAO.getTopics(
+				function(topics){
+					appendToList(topics);
+				}
+		);
+
+		var appendToList = function(topics){
+			selectedTopic = $('#topic-multiselect').val();
+			$('#topic-multiselect').empty();
+			$.each(topics, function(index, topic){
+				$('#topic-multiselect').append('<option value="' + topic + '">' + topic + '</option>');
+			});
+			$('#topic-multiselect').val(selectedTopic);
+		};
+
+	    $('#form-singin').submit(function(event) {
+			event.preventDefault();
+			var name = $('#group_name').val();
+			var description = $('#description').val();
+
+			groupDAO.addGroup({"name": name, "description": description, "topics": $('#topic-multiselect').val()},
+					function() {
+						alert("Group added.");
+					},
+					function() {
+						alert("Could not add group.");
+			},)
+	    });
+	});
+    </script>
+</body>
+</html>

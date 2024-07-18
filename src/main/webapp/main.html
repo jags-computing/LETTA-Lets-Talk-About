@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>LETTA</title>
+    <link rel="stylesheet" href="css/groups.css">
+    <link rel="stylesheet" href="css/events.css">
+    <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-dark bg-dark box-shadow">
+            <div class="container d-flex justify-content-between">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <strong>LETTA</strong>
+                </a>
+
+                <div class="form-check form-switch">
+                    <label class="form-check-label" for="switch_search_div" style="color: white;">User/Group Search</label>
+                    <input class="form-check-input" type="checkbox" id="switch_search_div" data-bs-toggle="collapse" data-bs-target=".switch_search">
+                </div>
+                
+				<div class="collapse show container-form-search switch_search">
+                    <form id="search-form">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="groupname" class="form-label" style="color: white;">Nombre:</label>
+                                <input type="text" class="form-control" id="groupname" name="groupname" placeholder="Ingrese el nombre del grupo">
+                            </div>
+                            <div class="col">
+                                <label for="select-list-topic" class="form-label" style="color: white;">Selecciona una temática:</label>
+                                <select class="form-select" id="select-list-topic" name="select-list">
+                                    <option value="" disabled selected>Seleccione una temática</option>
+                                </select>
+                            </div>
+                            <div class="col">
+
+                                <button id="clear_form" type="button" class="btn btn-secondary">Limpiar</button>
+                                <button id="show_search" type="submit" class="btn btn-primary">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="collapse container-form-search switch_search">
+                    <form id="user-search-form">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="username" class="form-label" style="color: white;">Nombre:</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Ingrese el nombre del user">
+                            </div>
+
+                            <div class="col">
+                            </div>
+
+                            <div class="col">
+                                <button id="clear_user_form" type="button" class="btn btn-secondary">Limpiar</button>
+                                <button id="show_user_search" type="submit" class="btn btn-primary">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <button id="go-create-group" class="btn btn-primary">Crear grupo</button>
+                <button id="logout" class="btn btn-dark">Cerrar sesión</button>
+                <button id="edit_toggle_button" type="button" class="btn btn-warning">Editar perfil</button>
+            </div>
+        </div>
+    </header>
+
+    
+
+    <div class="container">
+        <div id="people-container" style="display: none">
+            <h1 class="display-5 mt-3 mb-3">Personas</h1>
+        </div>
+		<div id="search-container">
+            <h3 class="display-5 mt-3 mb-3">Resultados de búsqueda</h3>
+        </div>
+        <div id="search-users-container">
+            <h3 class="display-5 mt-3 mb-3">Resultados de búsqueda</h3>
+        </div>
+
+        <div class=""  id="group-detail-container">
+            <div role="document">
+                <div class="fill-parent">
+                    <div class="row fill-parent"> <!-- Header -->
+
+                        <div class="col-10 d-flex justify-content-center">
+                           
+                            <div class="col-2 d-flex justify-content-start me-3">
+                                <button type="button" class="btn btn-primary" style="width: 70px; height: 35px; text-align: center;" id="joinButton">
+                                 Unete
+                                </button>
+                        </div>
+
+
+                        <div class="col-2 d-flex justify-content-start">
+                            <button type="button" class="btn btn-primary" style="width: 70px; height: 35px; text-align: center;" onclick="hideGroupView()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        
+                            
+                        <div id="group-events" class="d-flex justify-content-center"></div>
+
+                        <div class="col-10 d-flex justify-content-center">
+                            <h5 id="group-title">Título</h5>
+                        </div>
+
+                    </div>
+
+                    <hr class="my-3"/>
+
+                    <div class="" id="group-content"> <!-- Body -->
+                    </div>
+
+                    <hr/>
+
+                    <div id="group-event-list" class=""> <!-- For group's events -->
+
+                    </div>
+                    <div id="event-comments" class="comments-container" style="display: none; border: 1px solid #000; border-radius: 5px;">
+                        <h6>Comentarios</h6>
+                        <ul id="comments-list"></ul>
+                        <div id="reportCommentFormContainer" style="display: none;">
+                            <form id="reportCommentForm">
+                                <input type="hidden" id="comment_report_id" name="comment_report_id">
+                                <input type="hidden" id="user_id" name="user_id">
+                                <label for="reportReason">Motivo del reporte del comentario:</label><br>
+                                <textarea class="form-control" id="reportReason" name="reportReason" rows="3" required maxlength="500"></textarea><br><br>
+                                <input type="submit" id="add_comment_report_button" class="btn btn-danger" value="Enviar Reporte">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="container">
+        <div id="events-container">
+            <form id="eventoForm">
+                <h1 class="display-5 mt-3 mb-3" id="newEventTitle">Nuevo evento</h1>
+                <div class="mb-3">
+                    <label for="eventName" class="form-label">Nombre del Evento:</label>
+                    <input type="text" class="form-control" id="eventName" name="eventName" required>
+                </div>
+    
+                <div class="mb-3">
+                    <label for="eventDate" class="form-label">Fecha del Evento:</label>
+                    <input type="date" class="form-control" id="eventDate" name="eventDate" required>
+                </div>
+    
+                <div class="mb-3 d-none">
+                    <label for="groupId" class="form-label"></label>
+                    <input type="number" class="form-control" id="groupId" name="groupId" required>
+                </div>
+    
+                <div class="mb-3">
+                    <label for="description" class="form-label">Descripción:</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required maxlength="500"></textarea>
+                </div>
+    
+                <div class="mb-3">
+                    <label for="mediaFile" class="form-label">Archivo Multimedia:</label>
+                    <input type="file" class="form-control" id="mediaFile" name="mediaFile">
+                </div>
+
+                <div class="mb-3 d-none">
+                    <label for="ownerid" class="form-label"></label>
+                    <input type="number" class="form-control" id="ownerid" name="ownerid" required>
+                </div>
+    
+                <button type="submit" id="new_event_submit" class="btn btn-primary">Enviar</button>
+                <button id="new_event_cancel" class="btn btn-danger">Cancelar</button>
+            </form>
+        </div>
+
+        
+        <div id="reports-container">
+        </div>
+        
+
+    </div>
+
+    
+
+
+    
+
+    <div class="modal fade" tabindex="-1" id="profile_modal" data-bs-backdrop="true" data-bs-keyboard="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profile_modal_title">Perfil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="profilePictureView" ></div>
+                    <form id="updateProfileForm">
+                        <div class="form-group">
+                            <label for="about_me">About Me:</label>
+                            <input type="text" class="form-control" id="about_me" name="about_me" pattern="[A-Za-z0-9 @]{0,500}" title="About me may not contain more than 500 characters"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="public_contact">Public Contact:</label>
+                            <input type="text" class="form-control" id="public_contact" name="public_contact" pattern="[A-Za-z0-9 ]{0,80}" title="Public may not contain more than 80 characters"></input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nickname">Nickname:</label>
+                            <input type="text" class="form-control" id="nickname" name="nickname" required pattern="[A-Za-z0-9 ]{0,30}" title="Nickname may not contain more than 30 characters"> </input>
+                        </div>
+                        <div class="form-group" id="profile_picture_input">
+                            <label for="profilePicture">Profile Picture:</label>
+                            <input type="file" class="form-control" id="profilePicture" name="profilePicture" accept="image/png" required></input>
+                        </div>
+                        <button id="edit_profile_button" on_click=""  type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/dao/people.js"></script>
+    <script type="text/javascript" src="js/view/people.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+
+	<script type="text/javascript" src="js/view/topics.js"></script>
+	<script type="text/javascript" src="js/dao/topics.js"></script>
+    <script type="text/javascript" src="js/dao/groups.js"></script>
+    <script type="text/javascript" src="js/view/groups.js"></script>
+    <script type="text/javascript" src="js/view/events.js"></script>
+    <script type="text/javascript" src="js/dao/events.js"></script>
+    <script type="text/javascript" src="js/dao/user.js"></script>
+    <script type="text/javascript" src="js/view/users.js"></script>
+    <script type="text/javascript" src="js/view/profile.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+
+
+            
+            $('#profile_modal').on('hidden.bs.modal', function () {
+                
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                
+            });
+
+            
+            if(localStorage.getItem('authorization-token') === null){
+                $("#go-create-group").hide()
+                $('#edit_toggle_button').hide()
+                $('#go-register').hide()
+                $('#logout').html("Salir")
+                $('#logout').click(function(event) {
+                    event.preventDefault();
+                    window.location.href = "index.html"
+                });
+            }
+            else{
+                $('#go-create-group').click(function(event) {
+                    event.preventDefault();
+                    window.location = 'create_group.html';
+                });
+                $('#logout').click(function(event) {
+                    event.preventDefault();
+                    doLogout();
+                });
+            }
+
+            
+            $('#profile_modal').on('hidden.bs.modal', function () {
+                
+            });
+
+            $("#edit_toggle_button").click( function(){
+                let about_input = $("#about_me")
+                let public_contact_input = $("#public_contact")
+                let profile_picture_input = $("#profilePicture")
+                let profile_picture_view = $("#profilePictureView")
+                let submit_button = $("#edit_profile_button")
+
+
+                profile_picture_view.hide()
+                profile_picture_input.show()
+                submit_button.show()
+
+                new bootstrap.Modal(document.getElementById('profile_modal')).show();
+            });
+
+            
+
+
+            
+            hideGroupView()
+
+            $('#search-container').hide();
+            $('#search-users-container').hide();
+
+            $('#logout').click(function(event) {
+                event.preventDefault();
+                doLogout();
+            });
+
+
+			var viewTopic = new TopicsView(new TopicsDAO(), 'topic-select-list');
+			viewTopic.init();
+
+            var viewGroups = new GroupsView(new GroupsDAO(),
+                'search-container'
+            );
+            
+            viewGroups.init();
+
+            let userDAO = new UserDAO()
+
+            var viewUser = new UserView(userDAO,
+                'search-users-container'
+            );
+            viewUser.init();
+
+            var profileView = new ProfileView(userDAO);
+            profileView.init();
+
+            var viewEvents = new EventsView(new EventsDAO());
+            viewEvents.init();
+
+            $("#edit_toggle_button").click( function(){
+                let about_input = $("#about_me")
+                let public_contact_input = $("#public_contact")
+                let nickname_input = $("#nickname")
+                let profile_picture_form = $("#profile_picture_input")
+                let profile_picture_view = $("#profilePictureView")
+                let submit_button = $("#edit_profile_button")
+
+                userDAO.listUserByUsername(localStorage.getItem('user_name'), function(users) {
+                    $.each(users, function(key, user) {
+                        if(user.profileAbout !== null){
+                            about_input.val(user.profileAbout)
+                        }
+
+                        if(user.publicContact !== null){
+                            public_contact_input.val(user.publicContact)
+                        }
+
+                        if(user.nickname !== null){
+                            nickname_input.val(user.nickname)
+                        }
+                    });
+                }
+                )
+
+
+
+
+                profile_picture_view.hide()
+                profile_picture_form.show()
+                submit_button.show()
+
+                new bootstrap.Modal(document.getElementById('profile_modal')).show();
+            });
+
+
+			
+            $('#show_people').click(function(event) {
+                event.preventDefault();
+                elem = $("#people-container")
+                if(elem.style.display !== "none"){
+                    elem.style.display = "none"
+                }
+                else{
+                    elem.style.display = "block"
+                }
+            });
+
+			$('#show_search').click(function(event) {
+                event.preventDefault();
+				$("#people-container").hide();
+				$("#search-container").show();
+                $("#show_search").submit();
+                $("#group-detail-container").hide();
+                $("#search-users-container").hide();
+            });
+            $('#show_user_search').click(function(event) {
+                event.preventDefault();
+                $("#people-container").hide();
+                $("#search-users-container").show();
+                $("#search-container").hide();
+                $("#show_user_search").submit();
+                $("#group-detail-container").hide()
+            });
+
+
+            $('#edit_profile_button').click(function(event) {
+                event.preventDefault();
+                let profile_picture_input = $("#profilePicture")
+
+                $("#edit_profile_button").submit();
+            });
+
+
+
+        });
+
+    </script>
+
+</body>
+</html>

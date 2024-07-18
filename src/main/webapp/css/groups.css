@@ -1,0 +1,64 @@
+/* Estilos para centrar los elementos dentro de group-detail-container */
+#group-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#group-detail-container .row.fill-parent {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+#group-detail-container .row.fill-parent .col-2.d-flex.justify-content-start {
+    display: flex;
+    align-items: center;
+}
+
+
+#group-detail-container .row.fill-parent #group-title {
+    flex: 1;
+    text-align: center;
+}
+
+#group-detail-container .row.fill-parent #joinButton {
+    align-self: center;
+    margin-left: auto;
+}
+
+
+#group-detail-container .fill-parent {
+    width: 100%;
+}
+
+#group-detail-container .d-flex {
+    display: flex;
+}
+
+#group-detail-container .justify-content-center {
+    justify-content: center;
+}
+
+#group-detail-container .justify-content-start {
+    justify-content: flex-start;
+}
+
+#group-detail-container .justify-content-end {
+    justify-content: flex-end;
+}
+
+#group-detail-container hr {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+#group-detail-container #group-content,
+#group-detail-container #group-event-list {
+    width: 100%;
+    text-align: center;
+}

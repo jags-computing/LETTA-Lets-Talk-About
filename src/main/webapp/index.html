@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<title>LETTA - Bienvenido</title>
+	
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/groups.css">
+	<link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+	<!--	<link rel="stylesheet"href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+</head>
+<body class="text-center">
+
+	<div class="container">
+		<div class="row">
+			<h1>Bienvenido a LETTA</h1>
+			<button id="go-main" class="btn btn-primary mt-3">Ir a página principal</button>
+			<button id="go-login" class="btn btn-primary mt-3">Ir al login</button>
+			<button id="go-register" class="btn btn-primary mt-3">Ir página de registro</button>
+		</div>
+	</div>
+
+
+	<script type="text/javascript"
+		src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+	    $('#go-main').click(function(event) {
+		event.preventDefault();
+			window.location = 'main.html';
+	    });
+
+		$('#go-login').click(function(event) {
+			event.preventDefault();
+			window.location = 'login.html';
+		});
+
+		$('#go-register').click(function(event) {
+			event.preventDefault();
+			window.location = 'register.html';
+		});
+	});
+    </script>
+</body>
+</html>
