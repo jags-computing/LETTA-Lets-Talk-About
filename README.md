@@ -1,12 +1,6 @@
 LETTA
 ==========
 
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow)
-![Node.js](https://img.shields.io/badge/Node.js-v14.17.0-green)
-![Express](https://img.shields.io/badge/Express-v4.17.1-lightgrey)
-![React](https://img.shields.io/badge/React-v17.0.2-blue)
-![MongoDB](https://img.shields.io/badge/MongoDB-v4.4.6-green)
-
 Aplicación y arquitectura de ejemplo para la asignatura Desarrollo Ágil de
 Aplicaciones del Grado en Ingeniería Informática de la Escuela Superior de
 Ingeniería Informática de la Universidad de Vigo.
